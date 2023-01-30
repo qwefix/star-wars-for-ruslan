@@ -1,0 +1,47 @@
+@import "./colors.scss";
+
+@mixin starsBackground {
+  background-image: url(../assets/images/starsBg.png);
+  cursor: url(../assets/cursors/auto.cur), auto;
+}
+
+@mixin cursor-text {
+  cursor: url(../assets/cursors/text.cur), text;
+}
+@mixin cursor-active {
+  cursor: url(../assets/cursors/active.cur), text;
+}
+
+@mixin button {
+  color: $text;
+  &:hover {
+    background-color: $primary-l;
+  }
+  &[data-active] {
+    background-color: $primary;
+  }
+  @include focused()
+}
+
+@mixin glow-focused {
+  animation: glow .5s infinite alternate;
+}
+@mixin glow {
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    filter: drop-shadow(0 0 20px $primary-l);
+  }
+  to {
+    filter: drop-shadow(0 0 5px $primary-l);
+  }
+}
+
+@mixin focused{
+  &:focus{
+    box-shadow: none;
+    @include glow-focused ;
+  }
+}

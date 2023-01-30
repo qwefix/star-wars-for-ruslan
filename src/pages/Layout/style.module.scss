@@ -1,0 +1,15 @@
+@import "../../styles/mixins.scss";
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  @include starsBackground;
+  input {
+    @include cursor-text;
+  }
+  button {
+    @include cursor-active;
+  }
+}

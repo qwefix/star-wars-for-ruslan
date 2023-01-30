@@ -1,0 +1,85 @@
+@import "../../styles/mixins.scss";
+@import "../../styles/colors.scss";
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .input {
+    @include focused();
+  }
+  .searchButton {
+    @include button;
+  }
+  .filters {
+    margin-top: 20px;
+    .filter {
+      @include button;
+    }
+  }
+}
+.searchListContainer {
+  width: 250px;
+  max-height: 150px;
+  overflow-y: scroll;
+  .list {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    min-height: 40px;
+    button {
+      padding: 0;
+      width: 230px;
+      text-overflow: ellipsis;
+      display: grid;
+      height: 50px;
+      box-sizing: content-box;
+      grid-template-columns: 50px 180px;
+      grid-template-rows: 30px 20px;
+      grid-template-areas:
+        "a n"
+        "a d";
+      .ava {
+        grid-area: a;
+        width: 50px;
+        height: 50px;
+        padding: 5px;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+      img {
+        object-fit: cover;
+        max-height: 100%;
+        width: 100%;
+        filter: drop-shadow(0 0 20px $primary-l);
+      }
+      .name {
+        grid-area: n;
+        margin: 0;
+        height: 30px;
+        line-height: 30px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .desc {
+        grid-area: d;
+        margin: 0;
+        height: 20px;
+        line-height: 20px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
+  }
+}
+.emptyList {
+  display: flex;
+  color: $text;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  width: 250px;
+}
