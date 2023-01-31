@@ -93,7 +93,7 @@ const Search: React.FC<SearchProps> = ({ onFilterSelect }) => {
   ) => {
     e.preventDefault();
     if (isLoading || !data?.length) return;
-    navigate(data[0].request);
+    navigate(`/${data[0].request}`);
   };
 
   const renderList = useMemo(() => {

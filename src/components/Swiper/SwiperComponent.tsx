@@ -30,12 +30,8 @@ const SwiperComponent: React.FC<SwiperProps> = ({ data, itemsType }) => {
         modules={[Mousewheel]}
       >
         {data.map((item) => (
-          <SwiperSlide>
-            <Link
-              to={`/${itemsType}/${item.id}`}
-              className={c.button}
-              key={item.id}
-            >
+          <SwiperSlide key={`/${itemsType}/${item.id}`}>
+            <Link to={`/${itemsType}/${item.id}`} className={c.button}>
               <div className={c.ava}>
                 <img src={item.img} alt={itemsType} />
               </div>
