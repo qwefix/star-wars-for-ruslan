@@ -9,6 +9,7 @@
   .allLink{
     margin-bottom: 10px;
     color: $primary-l;
+    @include cursor-active();
     &:hover{
       color: $primary;
     }
