@@ -72,7 +72,48 @@ export const planetsItemApi: (
     ...response.data,
     img: planetsImg,
     url: response.data.url.split("/").reverse()[1],
+    residents: response.data.residents.map(
+      (resident) => resident.split("/").reverse()[1]
+    ),
   };
+};
+
+export const ninePlanetsApi: (
+  id: string | undefined
+) => Promise<PlanetsType[] | null> = async (id) => {
+  if (!id) return null;
+  const {
+    data: { count },
+  } = await axios.get<{ results: PlanetsType[]; count: number }>(
+    `https://swapi.dev/api/planets`
+  );
+  const firstPageNumber = Math.ceil(
+    (Math.ceil(count / 10) - 1) * Math.random()
+  );
+
+  const {
+    data: { results: firstPageArray },
+  } = await axios.get<{ results: PlanetsType[]; count: number }>(
+    `https://swapi.dev/api/planets/?page=${firstPageNumber}`
+  );
+  const {
+    data: { results: secondPageArray },
+  } = await axios.get<{ results: PlanetsType[]; count: number }>(
+    `https://swapi.dev/api/planets/?page=${firstPageNumber + 1}`
+  );
+
+  const result = [...firstPageArray, ...secondPageArray];
+  console.log(result.map((r) => r.name));
+
+  const transformed = result.map((item) => ({
+    ...item,
+    img: planetsImg,
+    url: item.url.split("/").reverse()[1],
+  }));
+  const shuffled = transformed
+    .filter((item) => item.url !== id)
+    .sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, 9);
 };
 
 export const starshipsItemApi: (
@@ -86,5 +127,46 @@ export const starshipsItemApi: (
     ...response.data,
     img: starshipsImg,
     url: response.data.url.split("/").reverse()[1],
+    pilots: response.data.pilots.map(
+      (pilot) => pilot.split("/").reverse()[1]
+    ),
   };
+};
+
+export const nineStarshipsApi: (
+  id: string | undefined
+) => Promise<StarshipType[] | null> = async (id) => {
+  if (!id) return null;
+  const {
+    data: { count },
+  } = await axios.get<{ results: StarshipType[]; count: number }>(
+    `https://swapi.dev/api/starships`
+  );
+  const firstPageNumber = Math.ceil(
+    (Math.ceil(count / 10) - 1) * Math.random()
+  );
+
+  const {
+    data: { results: firstPageArray },
+  } = await axios.get<{ results: StarshipType[]; count: number }>(
+    `https://swapi.dev/api/starships/?page=${firstPageNumber}`
+  );
+  const {
+    data: { results: secondPageArray },
+  } = await axios.get<{ results: StarshipType[]; count: number }>(
+    `https://swapi.dev/api/starships/?page=${firstPageNumber + 1}`
+  );
+
+  const result = [...firstPageArray, ...secondPageArray];
+  console.log(result.map((r) => r.name));
+
+  const transformed = result.map((item) => ({
+    ...item,
+    img: starshipsImg,
+    url: item.url.split("/").reverse()[1],
+  }));
+  const shuffled = transformed
+    .filter((item) => item.url !== id)
+    .sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, 9);
 };

@@ -46,7 +46,7 @@ const SwiperComponent: React.FC<SwiperProps> = ({ data, itemsType }) => {
         ))}
         <SwiperSlide>
           <Link to={`/allItems`} className={c.button}>
-            <p className={c.name}>Browse more ...</p>
+            <p className={c.name}>Browse all ...</p>
           </Link>
         </SwiperSlide>
       </Swiper>

@@ -89,3 +89,11 @@ export type FilterType = {
   value: ItemTypeEnum;
   isSelected: boolean;
 };
+
+export type AllItemsPageItem = {
+  id: string;
+  name: string;
+  description: string;
+  img: string;
+  type: ItemTypeEnum;
+};

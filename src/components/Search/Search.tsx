@@ -7,7 +7,7 @@ import {
   Spinner,
   TextInput,
 } from "evergreen-ui";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { searchApi } from "./searchApi";
 import {
@@ -33,7 +33,11 @@ const renderDescriptionText = (item: MixedType) => {
   }
 };
 
-const Search: React.FC = () => {
+type SearchProps = {
+  onFilterSelect?: (filters: ItemTypeEnum[]) => void;
+};
+
+const Search: React.FC<SearchProps> = ({ onFilterSelect }) => {
   const navigate = useNavigate();
 
   const [searchString, setSearchString] = useState("");
@@ -55,6 +59,11 @@ const Search: React.FC = () => {
       isSelected: false,
     },
   ]);
+
+  useEffect(() => {
+    if (onFilterSelect)
+      onFilterSelect(filters.filter((f) => f.isSelected).map((f) => f.value));
+  }, [onFilterSelect, filters]);
 
   const [isListOpened, setIsListOpened] = useState(false);
 
@@ -105,7 +114,7 @@ const Search: React.FC = () => {
       <div className={c.searchListContainer}>
         <div className={c.list}>
           {data.map((item) => (
-            <Link to={item.request} className={c.item} key={item.url}>
+            <Link to={`/${item.request}`} className={c.item} key={item.url}>
               <div className={c.ava}>
                 <img src={item.img} alt={item.type} />
               </div>
@@ -120,6 +129,9 @@ const Search: React.FC = () => {
 
   return (
     <div className={c.wrapper}>
+      <Link className={c.allLink} to='/allItems'>
+        Browse all
+      </Link>
       <Popover content={renderList} minHeight={150} isShown={isListOpened}>
         <Group className={c.inputGroup}>
           <TextInput

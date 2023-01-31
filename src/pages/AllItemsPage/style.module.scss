@@ -1,27 +1,50 @@
 @import "../../styles/mixins.scss";
 
 .wrapper {
+  width: 1000px;
+  padding: 30px;
+  max-width: 100%;
   display: flex;
-  .swiper {
-    user-select: none;
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    position: relative;
-    :global(.swiper-slide) {
-      width: fit-content;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  .backButton {
+    align-self: flex-start;
+    margin-bottom: 20px;
+  }
+  .loading{
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .listWrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+    .list {
+      margin-top: 20px;
+      flex-grow: 1;
+      width: 600px;
+      max-width: 100%;
+      padding: 10px;
+      max-height: 70vh;
+      overflow-y: auto;
       .button {
+        grid-column-gap: 10px;
+        margin-bottom: 10px;
         background-color: white;
         color: $text;
         text-decoration: none;
         border-radius: 5px;
-        padding: 0;
-        width: 230px;
+        padding: 10px;
         text-overflow: ellipsis;
         display: grid;
-        height: 50px;
         box-sizing: content-box;
-        grid-template-columns: 50px 180px;
+        grid-template-columns: 50px auto;
         grid-template-rows: 30px 20px;
         grid-template-areas:
           "a n"
@@ -51,6 +74,7 @@
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
+          text-align: end;
         }
         .desc {
           grid-area: d;
@@ -60,15 +84,22 @@
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
+          text-align: end;
         }
       }
     }
-  }
-  .nav {
-    @include button;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: white;
+    .pagination {
+      & > ul > li > button {
+        @include button();
+        background-color: gainsboro;
+        &:global(.ub-bg-clr_EBF0FF) {
+          background-color: $primary;
+        }
+        @media (max-width: 700px) {
+          padding: 1px 3px;
+          min-width: 15px;
+        }
+      }
+    }
   }
 }
