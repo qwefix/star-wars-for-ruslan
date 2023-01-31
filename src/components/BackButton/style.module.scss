@@ -3,15 +3,13 @@
 
 .button {
   color: white;
-  background-color: transparent;
+  background-color: transparent !important;
   @include focused();
   box-shadow: none !important;
-  border: none;
-  font-size: 20px;
-  transition: .3s;
+  border: none !important;
+  font-size: 20px !important;
+  transition: .3s !important;
   &:hover{
-    background-color: transparent !important;
     color: $primary;
-    border: none !important;
   }
 }
