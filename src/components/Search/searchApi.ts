@@ -2,7 +2,7 @@ import axios from "axios";
 import peopleImg from "../../assets/images/avatars/people.png";
 import planetsImg from "../../assets/images/avatars/planets.png";
 import starshipsImg from "../../assets/images/avatars/starships.png";
-import { ItemTypeEnum, MixedResponseType, MixedType } from "../../types/types";
+import { FilterType, ItemTypeEnum, MixedResponseType, MixedType } from "../../types/types";
 
 const avatarsRelations = {
   people: peopleImg,
@@ -32,25 +32,23 @@ export const searchApi: (
         `https://swapi.dev/api/${category}?search=${searchString}`
       )
       .then((r) =>
-        r.data.results.map(
-          (item) =>
-            ({
-              ...item,
-              type: category,
-              img: avatarsRelations[category],
-              request: item.url.split("/").slice(-3, -1).join("/"),
-            } as MixedType)
-        )
+        r.data.results
+          .filter(({ name }) =>
+            name.toLowerCase().includes(searchString.toLowerCase())
+          )
+          .map(
+            (item) =>
+              ({
+                ...item,
+                type: category,
+                img: avatarsRelations[category],
+                request: item.url.split("/").slice(-3, -1).join("/"),
+              } as MixedType)
+          )
       )
   );
 
   const allResponses = await Promise.all(allPromises);
 
   return allResponses.flat();
-};
-
-export type FilterType = {
-  label: string;
-  value: ItemTypeEnum;
-  isSelected: boolean;
 };

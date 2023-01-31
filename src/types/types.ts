@@ -83,3 +83,9 @@ export type StarshipType = StarshipResponseType & {
 };
 
 export type MixedType = PlanetsType | PeopleType | StarshipType;
+
+export type FilterType = {
+  label: string;
+  value: ItemTypeEnum;
+  isSelected: boolean;
+};

@@ -1,0 +1,17 @@
+@import "../../styles/mixins.scss";
+@import "../../styles/colors.scss";
+
+.button {
+  color: white;
+  background-color: transparent;
+  @include focused();
+  box-shadow: none !important;
+  border: none;
+  font-size: 20px;
+  transition: .3s;
+  &:hover{
+    background-color: transparent !important;
+    color: $primary;
+    border: none !important;
+  }
+}

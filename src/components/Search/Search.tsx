@@ -7,10 +7,11 @@ import {
   Spinner,
   TextInput,
 } from "evergreen-ui";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useQuery } from "react-query";
-import { FilterType, searchApi } from "./searchApi";
+import { searchApi } from "./searchApi";
 import {
+  FilterType,
   ItemTypeEnum,
   MixedType,
   PeopleType,
@@ -18,7 +19,7 @@ import {
   StarshipType,
 } from "../../types/types";
 import c from "./style.module.scss";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const renderDescriptionText = (item: MixedType) => {
   if (item.type === ItemTypeEnum.people) {
@@ -55,12 +56,17 @@ const Search: React.FC = () => {
     },
   ]);
 
+  const [isListOpened, setIsListOpened] = useState(false);
+
   const { isLoading, data } = useQuery(["search", filters, searchString], () =>
     searchApi(searchString, filters)
   );
 
   const onFilterClick = (value: string) => {
-    if (filters.filter((f) => f.isSelected).length >= 2) {
+    if (
+      filters.filter((f) => f.value !== value).filter((f) => f.isSelected)
+        .length >= 2
+    ) {
       setFilters(filters.map((f) => ({ ...f, isSelected: false })));
       return;
     }
@@ -81,15 +87,6 @@ const Search: React.FC = () => {
     navigate(data[0].request);
   };
 
-  useEffect(
-    () =>
-      console.log(
-        data?.map((i) => i.request),
-        isLoading
-      ),
-    [data, isLoading]
-  );
-
   const renderList = useMemo(() => {
     if (!searchString) {
       return <div className={c.emptyList}>Start typing to see results</div>;
@@ -108,28 +105,26 @@ const Search: React.FC = () => {
       <div className={c.searchListContainer}>
         <div className={c.list}>
           {data.map((item) => (
-            <Button
-              onClick={() => navigate(item.request)}
-              className={c.item}
-              key={item.url}
-            >
+            <Link to={item.request} className={c.item} key={item.url}>
               <div className={c.ava}>
                 <img src={item.img} alt={item.type} />
               </div>
               <p className={c.name}>{item.name}</p>
               <p className={c.desc}>{renderDescriptionText(item)}</p>
-            </Button>
+            </Link>
           ))}
         </div>
       </div>
     );
-  }, [searchString, isLoading, data, navigate]);
+  }, [searchString, isLoading, data]);
 
   return (
     <div className={c.wrapper}>
-      <Popover content={renderList}>
-        <Group>
+      <Popover content={renderList} minHeight={150} isShown={isListOpened}>
+        <Group className={c.inputGroup}>
           <TextInput
+            onFocus={() => setIsListOpened(true)}
+            onBlur={() => setIsListOpened(false)}
             className={c.input}
             type='search'
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

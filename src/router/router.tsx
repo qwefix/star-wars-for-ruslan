@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate, useParams } from "react-router-dom";
 import Layout from "../pages/Layout/Layout";
+import PeoplePage from "../pages/ItemsPage/PeoplePage/PeoplePage";
 import SearchPage from "../pages/searchPage/SearchPage";
 import { ItemTypeEnum } from "../types/types";
 
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
       },
       {
         path: `${ItemTypeEnum.people}/:id`,
-        element: <Test />,
+        element: <PeoplePage />,
       },
       {
         path: `${ItemTypeEnum.starships}/:id`,

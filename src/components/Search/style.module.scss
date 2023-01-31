@@ -5,11 +5,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  .input {
-    @include focused();
-  }
-  .searchButton {
-    @include button;
+  width: 100%;
+  .inputGroup {
+    display: flex;
+    width: 100%;
+    .input {
+      flex-grow: 1;
+      width: unset;
+      @include focused();
+      @media (max-width: 700px) {
+        width: 200px;
+      }
+    }
+    .searchButton {
+      @include button;
+    }
   }
   .filters {
     margin-top: 20px;
@@ -20,15 +30,18 @@
 }
 .searchListContainer {
   width: 250px;
-  max-height: 150px;
+  height: 150px;
   overflow-y: scroll;
   .list {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    justify-content: center;
-    min-height: 40px;
-    button {
+    min-height: 100%;
+    .item {
+      background-color: white;
+      color: $text;
+      text-decoration: none;
+      border-radius: 5px;
       padding: 0;
       width: 230px;
       text-overflow: ellipsis;
@@ -40,6 +53,8 @@
       grid-template-areas:
         "a n"
         "a d";
+      @include cursor-active();
+      @include button();
       .ava {
         grid-area: a;
         width: 50px;
@@ -47,12 +62,13 @@
         padding: 5px;
         border-radius: 50%;
         overflow: hidden;
-      }
-      img {
-        object-fit: cover;
-        max-height: 100%;
-        width: 100%;
-        filter: drop-shadow(0 0 20px $primary-l);
+        aspect-ratio: 1/1;
+        img {
+          object-fit: cover;
+          max-height: 100%;
+          width: 100%;
+          filter: drop-shadow(0 0 20px $primary-l);
+        }
       }
       .name {
         grid-area: n;
@@ -80,6 +96,6 @@
   color: $text;
   align-items: center;
   justify-content: center;
-  min-height: 40px;
+  min-height: 150px;
   width: 250px;
 }
