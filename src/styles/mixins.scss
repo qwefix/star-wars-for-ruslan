@@ -1,15 +1,15 @@
 @import "./colors.scss";
 
 @mixin starsBackground {
-  background-image: URL(../assets/images/starsBg.png);
-  cursor: URL(../assets/cursors/auto.cur), auto;
+  background-image: url(../assets/images/starsBg.png);
+  cursor: url(../assets/cursors/auto.cur), auto;
 }
 
 @mixin cursor-text {
-  cursor: URL(../assets/cursors/text.cur), text;
+  cursor: url(../assets/cursors/text.cur), text;
 }
 @mixin cursor-active {
-  cursor: URL(../assets/cursors/active.cur), text;
+  cursor: url(../assets/cursors/active.cur), text;
 }
 
 @mixin button {
