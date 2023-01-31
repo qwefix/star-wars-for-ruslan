@@ -2,7 +2,7 @@
 @import "../../styles/colors.scss";
 
 .button {
-  color: white;
+  color: white !important;
   background-color: transparent !important;
   @include focused();
   box-shadow: none !important;
